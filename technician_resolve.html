@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resolve Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="toggleBtn">☰</div>
+        <h2>Technician</h2>
+        <a href="technician_dashboard.html">Home</a>
+        <a href="technician_category.html?category=ERP">ERP</a>
+        <a href="technician_category.html?category=Hardware">Hardware</a>
+        <a href="technician_category.html?category=Network">Network</a>
+        <a href="technician_category.html?category=Software">Software</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <p id="greeting" style="font-size:1.2rem; margin-bottom:20px;"></p>
+        <h1>Resolve Ticket</h1>
+        <form id="resolveForm">
+            <label>Ticket ID:<input type="text" id="ticketId" disabled /></label><br />
+            <label>Created By:<input type="text" id="createdBy" disabled /></label><br />
+            <label>Created On:<input type="text" id="createdOn" disabled /></label><br />
+            <label>Resolved On:<input type="text" id="resolvedOn" disabled /></label><br />
+            <label>Remark:<textarea id="remark" required></textarea></label><br />
+            <button type="submit">Submit</button>
+        </form>
+        <p id="msg"></p>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (!token || role !== 'Technician') window.location.href = 'login.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const resolvedOnField = document.getElementById('resolvedOn');
+    resolvedOnField.value = new Date().toISOString().slice(0, 10);
+
+    async function loadTicket() {
+        const res = await fetch(`/api/tickets`, { headers: { Authorization: token }});
+        if (res.ok) {
+            const tickets = await res.json();
+            const t = tickets.find(x => x.ticketid == id);
+            if (t) {
+                document.getElementById('ticketId').value = t.ticketid;
+                document.getElementById('createdBy').value = t.created_by_name || t.created_by;
+                document.getElementById('createdOn').value = t.created;
+            }
+        }
+    }
+    loadTicket();
+
+    const name = localStorage.getItem('name');
+    const cat = localStorage.getItem('category');
+    if (name) document.getElementById('greeting').textContent = `Hello ${name} ${cat ? '('+cat+' Technician)' : ''}`;
+
+    document.getElementById('resolveForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const remark = document.getElementById('remark').value;
+        const resolvedOn = document.getElementById('resolvedOn').value;
+        const res = await fetch(`/api/tickets/${id}/resolve`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Authorization: token },
+            body: JSON.stringify({ remark })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            document.getElementById('msg').textContent = 'Ticket resolved';
+        } else {
+            document.getElementById('msg').textContent = data.message || 'Error';
+        }
+    });
+    </script>
+</body>
+</html>

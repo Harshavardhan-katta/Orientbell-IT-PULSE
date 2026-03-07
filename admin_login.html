@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <input type="text" id="userId" placeholder="User ID" required /><br />
+            <input type="password" id="password" placeholder="Password" required /><br />
+            <button type="submit">Login</button>
+        </form>
+        <div id="msg"></div>
+    </div>
+    <script>
+document.getElementById('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    console.log('admin login form submit');
+    const userId = document.getElementById('userId').value;
+    const password = document.getElementById('password').value;
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ userId, password })
+        });
+        console.log('server responded', res.status);
+        const data = await res.json();
+        console.log('payload', data);
+        if (res.ok && data.role === 'Admin') {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.role);
+            localStorage.setItem('userId', userId);
+            window.location='admin_dashboard.html';
+        } else {
+            document.getElementById('msg').textContent = data.message || 'Access denied';
+        }
+    } catch (err) {
+        console.error('login error', err);
+        document.getElementById('msg').textContent = 'Network error';
+    }
+});
+    </script>
+</body>
+</html>

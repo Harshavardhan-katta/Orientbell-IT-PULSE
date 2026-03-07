@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="toggleBtn">☰</div>
+        <h2>Technician</h2>
+        <a href="technician_dashboard.html">Home</a>
+        <a href="technician_category.html?category=ERP">ERP</a>
+        <a href="technician_category.html?category=Hardware">Hardware</a>
+        <a href="technician_category.html?category=Network">Network</a>
+        <a href="technician_category.html?category=Software">Software</a>
+        <a href="technician_resolved.html">Resolved</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <p id="greeting" style="font-size:1.2rem; margin-bottom:20px;"></p>
+        <h1>Category Overview</h1>
+        <div id="categories" class="cards-container"></div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (!token || role !== 'Technician') {
+        window.location.href = 'login.html';
+    }
+
+    async function loadCategories() {
+        const res = await fetch('/api/tickets', {
+            headers: { Authorization: token }
+        });
+        if (res.ok) {
+            const tickets = await res.json();
+            const counts = { ERP:0, Hardware:0, Network:0, Software:0 };
+            tickets.forEach(t => {
+                counts[t.category] = (counts[t.category] || 0) + 1;
+            });
+            const container = document.getElementById('categories');
+            container.innerHTML = '';
+            Object.entries(counts).forEach(([cat, cnt]) => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<h3>${cat}</h3><p>${cnt} tickets</p>`;
+                div.addEventListener('click', () => {
+                    window.location.href = `technician_category.html?category=${encodeURIComponent(cat)}`;
+                });
+                container.appendChild(div);
+            });
+        } else {
+            console.error('Failed to load tickets');
+        }
+    }
+
+    loadCategories();
+
+    // show greeting
+    const name = localStorage.getItem('name');
+    const cat = localStorage.getItem('category');
+    if (name) {
+        document.getElementById('greeting').textContent = `Hello ${name} ${cat ? '('+cat+' Technician)' : ''}`;
+    }    </script>
+</body>
+</html>

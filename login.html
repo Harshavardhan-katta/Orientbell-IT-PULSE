@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IT-Pulse Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <h1 class="login-title">Welcome to OBL IT-Pulse</h1>
+    <h2>Choose your role to proceed:</h2>
+
+    <div class="login-card">
+        <div class="options">
+            <div class="option" id="empBtn">
+                <img src="images/employee.png" alt="Employee" />
+                <span>Employee</span>
+            </div>
+            <div class="option" id="techBtn">
+                <img src="images/technician .png" alt="Technician" />
+                <span>Technician</span> 
+            </div>
+            <div class="option" id="admBtn">
+                <img src="images/admin.png" alt="Admin" />
+                <span>Admin</span>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.getElementById('empBtn').addEventListener('click', () => {
+        window.location.href='employee_login.html';
+    });
+    document.getElementById('techBtn').addEventListener('click', () => {
+        window.location.href='technician_login.html';
+    });
+    document.getElementById('admBtn').addEventListener('click', () => {
+        window.location.href='admin_login.html';
+    });
+    </script>
+</body>
+</html>

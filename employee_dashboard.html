@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Employee Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="toggleBtn">☰</div>
+        <a href="employee_dashboard.html">Dashboard</a>
+        <a href="raise_ticket.html">Raise Ticket</a>
+        <a href="my_tickets.html">My Tickets</a>
+        <a href="pending_tickets.html">Pending Tickets</a>
+        <a href="resolved_tickets.html">Resolved Tickets</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main">
+        <h1>Welcome Back, MR  <span id="username"></span></h1>
+        <div class="cards">
+            <div class="card">Total Raised: <span id="totalTickets">0</span></div>
+            <div class="card">Pending: <span id="pendingTickets">0</span></div>
+            <div class="card">Resolved: <span id="resolvedTickets">0</span></div>
+        </div>
+    </div>
+    <script src="js/employee.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

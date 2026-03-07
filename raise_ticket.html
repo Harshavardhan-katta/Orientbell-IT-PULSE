@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Raise Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar">
+        <a href="employee_dashboard.html">Dashboard</a>
+        <a href="raise_ticket.html" class="active">Raise Ticket</a>
+        <!-- other links -->
+    </div>
+    <div class="main">
+        <h2>New Ticket</h2>
+        <form id="ticketForm" enctype="multipart/form-data">
+            <input type="text" id="title" placeholder="Title" required><br>
+            <textarea id="description" placeholder="Description" required></textarea><br>
+            <select id="category">
+                <option value="ERP">ERP</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Network">Network</option>
+                <option value="Software">Software</option>
+            </select><br>
+            <select id="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select><br>
+            <input type="file" id="screenshot"><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="msg"></div>
+    </div>
+    <script src="js/raise_ticket.js"></script>
+</body>
+</html>

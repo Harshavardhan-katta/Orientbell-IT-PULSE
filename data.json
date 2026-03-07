@@ -1,0 +1,255 @@
+{
+  "users": [
+    {
+      "userid": "emp1",
+      "password": "$2b$10$ueQjTu8PuAnDKD6drkCzIOjUxRntPVg3EUmBOfMrReXr14iGR/mRi",
+      "name": "Alice",
+      "role": "Employee",
+      "department": "Finance"
+    },
+    {
+      "userid": "tech1",
+      "password": "$2b$10$1c1w0djoDsIn9kOI1OD0XOPxUhQUmpn.TcW4mQ984lb3cI8PxqPEy",
+      "name": "Bob",
+      "role": "Technician",
+      "department": "IT"
+    },
+    {
+      "userid": "admin1",
+      "password": "$2b$10$WKfUAMTevhR0vepfX17FluED9xM.OnfuF0Qta1whANPqpcgin/jGa",
+      "name": "Carol",
+      "role": "Admin",
+      "department": "IT"
+    },
+    {
+      "userid": "40997",
+      "password": "$2b$10$QYKAD/vYNbEfg2Dpjx2eKeXOpUgNjgMTmpF/ov2Jrg0cwGAlS74De",
+      "name": "HARSA VARDHAN",
+      "role": "Employee",
+      "department": "DEVELPER"
+    },
+    {
+      "userid": "40599",
+      "password": "$2b$10$U4GSMUj661LuiLwocDAT4eYqtuIWPlmW3miBk9ZBaz7tFbztqudl2",
+      "name": "Ravi",
+      "role": "Technician",
+      "department": "Tech"
+    },
+    {
+      "userid": "4998",
+      "password": "$2b$10$uTsMTRR4.PKtaaUUAEnYEOPmzJg5JxGnDrNr.L2sLMyb.c4DqrQFO",
+      "name": "SRIRAM MANOJ KUMAR",
+      "role": "Employee",
+      "department": "TESTER"
+    }
+  ],
+  "technicians": [
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "40599",
+      "name": "Ravi",
+      "category": "Software",
+      "department": "Tech"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    },
+    {
+      "techid": "tech1",
+      "name": "Bob",
+      "category": "Software",
+      "department": "IT"
+    },
+    {
+      "techid": "tech2",
+      "name": "Dave",
+      "category": "Hardware",
+      "department": "IT"
+    }
+  ],
+  "tickets": [
+    {
+      "title": "Email not working",
+      "description": "Cannot send emails since yesterday",
+      "category": "Software",
+      "priority": "High",
+      "status": "New",
+      "created": "2026-03-06T19:25:26.733Z",
+      "created_by": "emp1",
+      "assigned_to": "tech1",
+      "department": "Finance",
+      "ticketid": 1
+    },
+    {
+      "title": "Printer jam",
+      "description": "Paper stuck in printer",
+      "category": "Hardware",
+      "priority": "Medium",
+      "status": "New",
+      "created": "2026-03-06T19:25:26.734Z",
+      "created_by": "emp1",
+      "assigned_to": "tech2",
+      "department": "Finance",
+      "ticketid": 2
+    },
+    {
+      "title": "networking",
+      "description": "ok checking ",
+      "category": "Network",
+      "priority": "High",
+      "status": "New",
+      "created": "2026-03-06T19:27:59.533Z",
+      "created_by": "emp1",
+      "created_by_name": "Alice",
+      "assigned_to": null,
+      "department": "Finance",
+      "ticketid": 3
+    },
+    {
+      "title": "EMAIL",
+      "description": "FORGOTTEN MY EMAIL",
+      "category": "Software",
+      "priority": "High",
+      "status": "Resolved",
+      "created": "2026-03-06T20:00:23.429Z",
+      "created_by": "40997",
+      "created_by_name": "HARSA VARDHAN",
+      "assigned_to": "tech1",
+      "department": "DEVELPER",
+      "ticketid": 4,
+      "resolved_on": "2026-03-06T20:16:26.740Z",
+      "remark": "here is your new password \"Kharsha@9194\""
+    }
+  ],
+  "ticketCounter": 4,
+  "feedbacks": [
+    {
+      "feedbackid": "bb14ed62-1b73-4f40-b242-658b92cff076",
+      "ticketid": "hhj",
+      "rating": "1",
+      "comment": "ok",
+      "created": "2026-03-06T19:27:02.387Z",
+      "userid": "emp1"
+    },
+    {
+      "feedbackid": "23de5443-02fe-4191-884a-a988f38b6d0e",
+      "ticketid": "4",
+      "rating": "5",
+      "comment": "thanks",
+      "created": "2026-03-06T20:17:10.999Z",
+      "userid": "40997"
+    },
+    {
+      "feedbackid": "7e4c9eef-aa27-49fa-9f76-ee9e4df69b10",
+      "ticketid": "4",
+      "rating": "4",
+      "comment": "THANKS",
+      "created": "2026-03-06T20:54:24.236Z",
+      "userid": "40997"
+    }
+  ]
+}

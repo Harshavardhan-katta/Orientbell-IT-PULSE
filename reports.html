@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar">
+        <a href="admin_dashboard.html">Dashboard</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="tech_performance.html">Technician Performance</a>
+        <a href="add_user.html">Add User</a>
+        <a href="reports.html" class="active">Reports</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main">
+        <h1>Reports</h1>
+        <p>Select a report and download PDF.</p>
+        <div class="report-controls">
+            <h2>Advanced Reports</h2>
+            <div class="date-range-picker">
+                <div class="date-input">
+                    <label for="fromDate">From:</label>
+                    <input type="date" id="fromDate">
+                </div>
+                <div class="date-input">
+                    <label for="toDate">To:</label>
+                    <input type="date" id="toDate">
+                </div>
+            </div>
+            <div class="predefined-ranges">
+                <button id="last3Months">Last 3 Months</button>
+                <button id="last6Months">Last 6 Months</button>
+                <button id="last9Months">Last 9 Months</button>
+            </div>
+            <button id="downloadBtn">Download</button>
+        </div>
+        <div id="chartSection" style="display:none;">
+            <h2 id="reportTitle"></h2>
+            <canvas id="barChart"></canvas>
+            <canvas id="pieChart"></canvas>
+            <p id="reportSummary"></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

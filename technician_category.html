@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician Category Tickets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="toggleBtn">☰</div>
+        <h2>Technician</h2>
+        <a href="technician_dashboard.html">Home</a>
+        <a href="technician_category.html?category=ERP">ERP</a>
+        <a href="technician_category.html?category=Hardware">Hardware</a>
+        <a href="technician_category.html?category=Network">Network</a>
+        <a href="technician_category.html?category=Software">Software</a>
+        <a href="technician_resolved.html">Resolved</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <p id="greeting" style="font-size:1.2rem; margin-bottom:20px;"></p>
+        <h1 id="heading">Tickets</h1>
+        <table id="ticketTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Created By</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (!token || role !== 'Technician') window.location.href = 'login.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    document.getElementById('heading').textContent = category + ' Tickets';
+
+    async function loadTickets() {
+        const res = await fetch(`/api/tickets/category/${encodeURIComponent(category)}`, {
+            headers: { Authorization: token }
+        });
+        if (res.ok) {
+            const tickets = await res.json();
+            const tbody = document.querySelector('#ticketTable tbody');
+            tbody.innerHTML = '';
+            const myId = localStorage.getItem('userId');
+            tickets.filter(t=>t.status!=='Resolved').forEach(t => {
+                const tr = document.createElement('tr');
+                const canResolve = t.assigned_to == myId;
+                tr.innerHTML = `
+                    <td>${t.ticketid}</td>
+                    <td>${t.created_by_name || t.created_by}</td>
+                    <td>${t.category}</td>
+                    <td>${t.description}</td>
+                    <td>${t.status}</td>
+                    <td>${t.created}</td>
+                    <td><button data-id="${t.ticketid}" class="resolveBtn${canResolve ? '' : ' disabled'}" ${canResolve ? '' : 'disabled'}>Resolve</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.querySelectorAll('.resolveBtn').forEach(btn => {
+                if (!btn.disabled) {
+                    btn.addEventListener('click', () => {
+                        const id = btn.getAttribute('data-id');
+                        window.location.href = `technician_resolve.html?id=${id}`;
+                    });
+                }
+            });
+        }
+    }
+    loadTickets();
+    </script>
+</body>
+</html>

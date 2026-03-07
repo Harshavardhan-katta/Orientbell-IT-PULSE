@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Feedback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="employee_dashboard.html">Dashboard</a>
+        <a href="raise_ticket.html">Raise Ticket</a>
+        <a href="my_tickets.html">My Tickets</a>
+        <a href="pending_tickets.html">Pending Tickets</a>
+        <a href="resolved_tickets.html">Resolved Tickets</a>
+        <a href="feedback.html" class="active">Feedback</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main">
+        <h2>Leave Feedback</h2>
+        <form id="feedbackForm">
+            <input type="text" id="ticketId" placeholder="Ticket ID"><br>
+            <select id="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select><br>
+            <textarea id="comment" placeholder="Comment"></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="msg"></div>
+    </div>
+    <script>
+        // ensure logged in and adapt sidebar for technicians
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+        if (role === 'Technician') {
+            const sb = document.getElementById('sidebar');
+            sb.innerHTML = `
+                <a href="technician_dashboard.html">Home</a>
+                <a href="feedback.html" class="active">Feedback</a>
+                <a href="#" id="logout">Logout</a>
+            `;
+        }
+        // prefill ticketId if passed
+        const params = new URLSearchParams(window.location.search);
+        const tid = params.get('ticketId');
+        if (tid) document.getElementById('ticketId').value = tid;
+
+        document.getElementById('feedbackForm').addEventListener('submit', async e=>{
+            e.preventDefault();
+            const ticketId=document.getElementById('ticketId').value;
+            const rating=document.getElementById('rating').value;
+            const comment=document.getElementById('comment').value;
+            const token = localStorage.getItem('token');
+            const res=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json', Authorization: token},body:JSON.stringify({ticketId,rating,comment})});
+            const data=await res.json();
+            document.getElementById('msg').textContent=data.message||'Submitted';
+        });
+    </script>
+    <script src="js/common.js"></script>
+</body>
+</html>

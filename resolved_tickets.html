@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resolved Tickets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar">
+        <a href="employee_dashboard.html">Dashboard</a>
+        <a href="raise_ticket.html">Raise Ticket</a>
+        <a href="my_tickets.html">My Tickets</a>
+        <a href="pending_tickets.html">Pending Tickets</a>
+        <a href="resolved_tickets.html" class="active">Resolved Tickets</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <h2>Resolved Tickets</h2>
+        <table id="ticketTable"><thead><tr><th>ID</th><th>Category</th><th>Status</th><th>Assigned</th><th>Date</th><th>Remark</th><th>Feedback</th></tr></thead><tbody></tbody></table>
+    </div>
+    <script>
+        async function load() {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            if (!token || role !== 'Employee') { window.location.href = 'login.html'; return; }
+            const userId = localStorage.getItem('userId');
+            const res = await fetch(`/api/tickets/user/${userId}`, { headers: { Authorization: token } });
+            const tickets = await res.json();
+            const tbody = document.querySelector('#ticketTable tbody');
+            tickets.filter(t=>t.status==='Resolved').forEach(t=>{
+                const tr=document.createElement('tr');
+                tr.innerHTML=`<td>${t.ticketid}</td>
+                              <td>${t.category}</td>
+                              <td>${t.status}</td>
+                              <td>${t.assigned_to||''}</td>
+                              <td>${t.created}</td>
+                              <td>${t.remark||''}</td>
+                              <td><button class="giveFb" data-id="${t.ticketid}">Feedback</button></td>`;
+                tbody.appendChild(tr);
+            });
+            document.querySelectorAll('.giveFb').forEach(btn=>{
+                btn.addEventListener('click', ()=>{
+                    const id = btn.getAttribute('data-id');
+                    window.location.href = `feedback.html?ticketId=${id}`;
+                });
+            });
+        }
+        load();
+    </script>
+    <script src="js/common.js"></script>
+</body>
+</html>

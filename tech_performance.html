@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician Performance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar">
+        <a href="admin_dashboard.html">Dashboard</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="tech_performance.html" class="active">Technician Performance</a>
+        <a href="reports.html">Reports</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main">
+        <h1>Technician Performance</h1>
+        <p>This dashboard shows average feedback rating and ticket workload per technician.</p>
+        <canvas id="perfChart" style="max-width:600px;margin:20px auto;"></canvas>
+        <table id="perfTable" style="margin-top:20px;">
+            <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Tickets</th><th>Avg Rating</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // load technician performance stats
+    const token = localStorage.getItem('token');
+    fetch('/api/analytics/techperformance', { headers: { Authorization: token } })
+        .then(r=>r.json())
+        .then(data=>{
+            const ctx = document.getElementById('perfChart').getContext('2d');
+            const labels = data.map(d=>d.name);
+            const counts = data.map(d=>d.count);
+            const ratings = data.map(d=>d.avgRating || 0);
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        { label:'Tickets', data: counts, backgroundColor:'#3f3' },
+                        { label:'Avg Rating', data: ratings, backgroundColor:'#33f', yAxisID:'ratingAxis' }
+                    ]
+                },
+                options: {
+                    scales: {
+                        ratingAxis: { type:'linear', position:'right', min:0, max:5 }
+                    }
+                }
+            });
+            const tbody = document.querySelector('#perfTable tbody');
+            data.forEach(d=>{
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${d.techid}</td><td>${d.name}</td><td>${d.category||''}</td><td>${d.count}</td><td>${d.avgRating?d.avgRating.toFixed(2):'-'}</td>`;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
+    <script src="js/common.js"></script>
+</body>
+</html>

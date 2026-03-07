@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician Feedback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+     <div class="header">
+        <h1>OBL IT-PULSE</h1>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" id="toggleBtn">☰</div>
+        <h2>Technician</h2>
+        <a href="technician_dashboard.html">Home</a>
+        <a href="technician_feedback.html" class="active">Feedbacks</a>
+        <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="main-content">
+        <p id="greeting" style="font-size:1.2rem; margin-bottom:20px;"></p>
+        <h1>Feedback Received</h1>
+        <table id="fbTable">
+            <thead>
+                <tr><th>Ticket ID</th><th>Employee</th><th>Rating</th><th>Comment</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (!token || role !== 'Technician') {
+        window.location.href = 'login.html';
+    }
+
+    async function loadFeedback() {
+        const res = await fetch('/api/feedback/tech', { headers: { Authorization: token } });
+        if (!res.ok) return;
+        const fbs = await res.json();
+        const tbody = document.querySelector('#fbTable tbody');
+        fbs.forEach(f => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${f.ticketid}</td><td>${f.employee||''}</td><td>${f.rating}</td><td>${f.comment}</td>`;
+            tbody.appendChild(tr);
+        });
+    }
+    loadFeedback();
+    const name = localStorage.getItem('name');
+    const cat = localStorage.getItem('category');
+    if (name) {
+        document.getElementById('greeting').textContent = `Hello ${name} ${cat ? '('+cat+' Technician)' : ''}`;
+    }    </script>
+</body>
+</html>
