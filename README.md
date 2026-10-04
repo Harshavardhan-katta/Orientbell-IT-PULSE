@@ -6,6 +6,8 @@ Web-based ticketing system built for hackathon. Employees raise tickets, technic
 Login is split into employee and admin pages; technicians are handled similarly.
 
 Analytics include category, department, and monthly trend charts based on ticket data.
+next we will go to developed state
+
 
 ## Setup
 1. Clone or download repository.
